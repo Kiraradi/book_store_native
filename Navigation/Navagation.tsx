@@ -3,7 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import AuthStack from './Stacks/AuthStack';
 import RootStack from './Stacks/RootStack';
 
-const isAuth = true;
+const isAuth = false;
 
 const Navigation: FC = () => {
   return (

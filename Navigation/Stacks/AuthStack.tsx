@@ -1,20 +1,23 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {FC} from 'react';
 import LogInScreen from '../Screens/LogInScreen';
-import SingUpScreen from '../Screens/SingUpScreen';
+import SignUpScreen from '../Screens/SignUpScreen';
 
 type ParamsListStack = {
   LogIn: undefined;
-  SingUp: undefined;
+  SignUp: undefined;
 };
 
 const Stack = createNativeStackNavigator<ParamsListStack>();
 
 const AuthStack: FC = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
       <Stack.Screen name="LogIn" component={LogInScreen} />
-      <Stack.Screen name="SingUp" component={SingUpScreen} />
+      <Stack.Screen name="SignUp" component={SignUpScreen} />
     </Stack.Navigator>
   );
 };

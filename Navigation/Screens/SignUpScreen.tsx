@@ -1,24 +1,22 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {FC} from 'react';
 import {StyleSheet, View} from 'react-native';
-import LogInForm from '../../modules/LogInForm/LogInForm';
 import Header from '../../modules/Header/Header';
+import SingUpForm from '../../modules/SingUpForm/SignUpForm';
 
 type RootStackParamList = {
-  LogIn: undefined;
-  SingUp: undefined;
+  SignUp: undefined;
 };
-type Props = NativeStackScreenProps<RootStackParamList, 'LogIn'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
 
-const LogInScreen: FC<Props> = () => {
+const SignUpScreen: FC<Props> = () => {
   return (
     <View style={styles.container}>
       <Header />
-      <LogInForm />
+      <SingUpForm />
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -26,4 +24,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LogInScreen;
+export default SignUpScreen;
