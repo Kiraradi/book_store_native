@@ -14,23 +14,34 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import PoppinsText from '../../UI/CustomsTexts/PoppinsText';
-
-type FormData = {
-  email: string;
-  password: string;
-};
+import {IAuthData} from '../../interfaces';
+import {useAppDispatch} from '../../store/hooks/useAppDispatch';
+import {logInUserThunk} from '../../store/Thunks';
 
 const LogInForm: FC = () => {
   const [isPasswordSecure, setPasswordSecure] = useState(true);
   const navigation: NavigationProp<ParamListBase> = useNavigation();
+  const dispatch = useAppDispatch();
   const {
     watch,
     control,
     formState: {errors},
-  } = useForm<FormData>({
+  } = useForm<IAuthData>({
     resolver: yupResolver(LogInSchema),
     mode: 'all',
   });
+
+  const handleLogIn = async () => {
+    if (errors.email || errors.password) {
+      return;
+    }
+
+    const data = {
+      ...watch(),
+    };
+
+    dispatch(logInUserThunk(data));
+  };
 
   const changePasswordSecure = () => {
     setPasswordSecure(prev => !prev);
@@ -40,7 +51,7 @@ const LogInForm: FC = () => {
     <View style={styles.wrapper}>
       <Text style={styles.title}>Log In</Text>
       <View style={styles.conteiner}>
-        <Controller<FormData>
+        <Controller<IAuthData>
           control={control}
           render={({field: {onChange, value}}) => {
             return (
@@ -77,7 +88,7 @@ const LogInForm: FC = () => {
         />
       </View>
       <View style={styles.conteiner}>
-        <Controller<FormData>
+        <Controller<IAuthData>
           control={control}
           render={({field: {onChange, value}}) => {
             return (
@@ -121,7 +132,7 @@ const LogInForm: FC = () => {
       <View style={styles.buttonBar}>
         <CustomButton
           text={'Log In'}
-          callBack={() => {}}
+          callBack={handleLogIn}
           styles={styles.button}
         />
         <PoppinsText styles={styles.text}>or</PoppinsText>

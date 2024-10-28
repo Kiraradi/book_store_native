@@ -10,25 +10,40 @@ import TextError from '../../UI/TextError/TextError';
 import CustomButton from '../../UI/CustomButton/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import PoppinsText from '../../UI/CustomsTexts/PoppinsText';
-
-type FormData = {
-  email: string;
-  password: string;
-  passwordReplay: string;
-};
+import {ISignUpData} from '../../interfaces';
+import {useAppDispatch} from '../../store/hooks/useAppDispatch';
+import {signUpUserThunk} from '../../store/Thunks';
 
 const SingUpForm: FC = () => {
   const [isPasswordSecure, setPasswordSecure] = useState(true);
   const [isPasswordReplaySecure, setPasswordReplaySecure] = useState(true);
   const navigation = useNavigation();
+  const dispatch = useAppDispatch();
   const {
     watch,
     control,
     formState: {errors},
-  } = useForm<FormData>({
+  } = useForm<ISignUpData>({
     resolver: yupResolver(SingUpSchema),
     mode: 'onChange',
   });
+
+  const handleSignUpUser = async () => {
+    if (errors.email || errors.password || errors.passwordReplay) {
+      return;
+    }
+
+    if (watch('password') !== watch('passwordReplay')) {
+      return;
+    }
+
+    const data = {
+      email: watch('email'),
+      password: watch('password'),
+    };
+
+    dispatch(signUpUserThunk(data));
+  };
 
   const changePasswordSecure = () => {
     setPasswordSecure(prev => !prev);
@@ -42,7 +57,7 @@ const SingUpForm: FC = () => {
     <View style={styles.wrapper}>
       <Text style={styles.title}>Sign Up</Text>
       <View style={styles.conteiner}>
-        <Controller<FormData>
+        <Controller<ISignUpData>
           control={control}
           render={({field: {onChange, value}}) => {
             return (
@@ -79,7 +94,7 @@ const SingUpForm: FC = () => {
         />
       </View>
       <View style={styles.conteiner}>
-        <Controller<FormData>
+        <Controller<ISignUpData>
           control={control}
           render={({field: {onChange, value}}) => {
             return (
@@ -121,7 +136,7 @@ const SingUpForm: FC = () => {
         />
       </View>
       <View style={styles.conteiner}>
-        <Controller<FormData>
+        <Controller<ISignUpData>
           control={control}
           render={({field: {onChange, value}}) => {
             return (
@@ -138,7 +153,7 @@ const SingUpForm: FC = () => {
                 callbackForImg={changePasswordReplaySecure}
                 validationStatus={
                   value?.length > 0
-                    ? errors.password?.message
+                    ? errors.passwordReplay?.message
                       ? 'error'
                       : 'success'
                     : null
@@ -165,7 +180,7 @@ const SingUpForm: FC = () => {
       <View style={styles.buttonBar}>
         <CustomButton
           text={'Sign Up'}
-          callBack={() => {}}
+          callBack={handleSignUpUser}
           styles={styles.button}
         />
         <PoppinsText styles={styles.text}>or</PoppinsText>
