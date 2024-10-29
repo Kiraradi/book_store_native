@@ -15,15 +15,22 @@ const saveRefreshToken = async (token: string) => {
 };
 
 const getAccessToken = async () => {
-  const data = await RNSecureStorage.getItem('accessToken');
-
+  const data = await RNSecureStorage.getItem('accessToken').catch(() => {
+    return '';
+  });
   return data;
 };
 
 const getRefreshToken = async () => {
-  const data = await RNSecureStorage.getItem('refreshToken');
+  const data = await RNSecureStorage.getItem('refreshToken').catch(() => {
+    return '';
+  });
 
   return data;
+};
+
+const clearTokens = async () => {
+  await RNSecureStorage.clear();
 };
 
 export default {
@@ -31,4 +38,5 @@ export default {
   saveRefreshToken,
   getRefreshToken,
   getAccessToken,
+  clearTokens,
 };

@@ -1,10 +1,10 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {IStore} from '../interfaces';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {IStore, IUser} from '../interfaces';
 import {logInUserThunk, signUpUserThunk} from './Thunks';
 
 const initialState: IStore = {
   user: null,
-  pending: false,
+  pending: true,
   hasError: false,
 };
 
@@ -12,18 +12,23 @@ export const UserSlise = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    addUser(state, payload: PayloadAction<IUser | null>) {
+      const user = payload.payload;
+      state.user = user;
+    },
     logOut(state) {
       state.user = null;
+    },
+    changePending(state, payload: PayloadAction<boolean>) {
+      state.pending = payload.payload;
     },
   },
   extraReducers: builder => {
     builder
       .addCase(signUpUserThunk.pending, state => {
-        state.pending = true;
         state.hasError = false;
       })
       .addCase(logInUserThunk.pending, state => {
-        state.pending = true;
         state.hasError = false;
       })
       .addCase(signUpUserThunk.fulfilled, (state, action) => {
@@ -50,4 +55,4 @@ export const UserSlise = createSlice({
 });
 
 export default UserSlise.reducer;
-export const {logOut} = UserSlise.actions;
+export const {logOut, addUser, changePending} = UserSlise.actions;

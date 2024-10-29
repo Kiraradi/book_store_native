@@ -9,11 +9,14 @@ import React from 'react';
 import Navigation from './Navigation/Navagation';
 import {Provider} from 'react-redux';
 import {makeStore} from './store';
+import AuthProvider from './hocs/AuthProvider';
 
 function App(): React.JSX.Element {
   return (
     <Provider store={makeStore}>
-      <Navigation />
+      <AuthProvider>
+        <Navigation />
+      </AuthProvider>
     </Provider>
   );
 }

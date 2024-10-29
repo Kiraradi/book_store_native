@@ -32,6 +32,9 @@ const LogInForm: FC = () => {
   });
 
   const handleLogIn = async () => {
+    if (!watch('email') || !watch('password')) {
+      return;
+    }
     if (errors.email || errors.password) {
       return;
     }
@@ -39,7 +42,6 @@ const LogInForm: FC = () => {
     const data = {
       ...watch(),
     };
-
     dispatch(logInUserThunk(data));
   };
 

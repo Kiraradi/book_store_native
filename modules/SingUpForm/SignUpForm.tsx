@@ -29,6 +29,9 @@ const SingUpForm: FC = () => {
   });
 
   const handleSignUpUser = async () => {
+    if (!watch('email') || !watch('password') || !watch('passwordReplay')) {
+      return;
+    }
     if (errors.email || errors.password || errors.passwordReplay) {
       return;
     }
