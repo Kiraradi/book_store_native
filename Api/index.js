@@ -11,7 +11,6 @@ const instance = axios.create({
 instance.interceptors.request.use(
   async config => {
     const accessToken = await TokenService.getAccessToken();
-    console.log('accessToken', accessToken);
     config.headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json',
