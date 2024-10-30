@@ -6,6 +6,7 @@ import {useAppSelector} from '../../../../store/hooks/useAppSelector';
 const PersonalInformationCards: FC = () => {
   const email = useAppSelector(state => state.user.user?.email);
   const fullName = useAppSelector(state => state.user.user?.fullName);
+
   return (
     <View style={styles.wrapper}>
       <InformationCard
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
   wrapper: {
     flexDirection: 'column',
     width: '100%',
-    gap: 15,
+    gap: 20,
   },
 });
 

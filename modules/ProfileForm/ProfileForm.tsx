@@ -5,11 +5,12 @@ import {colors} from '../../assets/styles/colors';
 import {useAppSelector} from '../../store/hooks/useAppSelector';
 import UserAvatar from './components/UserAvatar/UserAvatar';
 import PersonalInformationCards from './components/PersonalInformationCards/PersonalInformationCards';
+import PersonalInfoEditForm from './components/PersonalInfoEditForm/PersonalInfoEditForm';
 
 const ProfileForm: FC = () => {
   const [IsInformationEdit, setInformationEdit] = useState(false);
-  const user = useAppSelector(state => state.user);
-  console.log(user);
+  const user = useAppSelector(state => state.user.user);
+  console.log('===>', user);
   const changeInformationEdit = () => {
     setInformationEdit(prev => !prev);
   };
@@ -21,7 +22,7 @@ const ProfileForm: FC = () => {
         <PoppinsText styles={styles.text}>Change information</PoppinsText>
       </Pressable>
       {IsInformationEdit ? (
-        <PoppinsText>Edit</PoppinsText>
+        <PersonalInfoEditForm />
       ) : (
         <PersonalInformationCards />
       )}

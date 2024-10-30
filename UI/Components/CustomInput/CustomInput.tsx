@@ -11,7 +11,7 @@ import {colors} from '../../../assets/styles/colors';
 import {FONT_FAMILY} from '../../../config/customFont';
 
 interface ICustomInput {
-  value: string;
+  value?: string;
   onChange?: (text: string) => void;
   img: ImageSourcePropType;
   placeholder: string;

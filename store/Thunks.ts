@@ -1,5 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {IAuthData} from '../interfaces';
+import {IAuthData, IEditUserData} from '../interfaces';
 import UserApi from '../services/UserApi';
 import TokenService from '../services/TokenService';
 
@@ -21,13 +21,23 @@ export const logInUserThunk = createAsyncThunk(
   'user/logInUser',
   async (data: IAuthData, thunkAPI) => {
     const response = await UserApi.logInUser(data);
-    console.log('log', response);
     if (!response.payload) {
       return thunkAPI.rejectWithValue(response.message);
     }
     await TokenService.saveAccessToken(response.payload.tokens.accessToken);
     await TokenService.saveRefreshToken(response.payload.tokens.refreshToken);
 
+    return response.payload.user;
+  },
+);
+
+export const editUserThunk = createAsyncThunk(
+  'user/editUser',
+  async (data: IEditUserData, thunkAPI) => {
+    const response = await UserApi.EditUserInfo(data);
+    if (!response.payload) {
+      return thunkAPI.rejectWithValue(response.message);
+    }
     return response.payload.user;
   },
 );

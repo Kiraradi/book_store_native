@@ -1,4 +1,10 @@
-import {IAuthData, IResponse, ITokens} from '../interfaces';
+import {
+  IAuthData,
+  IEditUserData,
+  IResponse,
+  ITokens,
+  IUser,
+} from '../interfaces';
 import configuredAxios from '../Api';
 import {IPayloadSignUpUser} from './interfaces';
 import {ServerBreakpoints} from '../enams';
@@ -14,7 +20,7 @@ const signUpUser = async (data: IAuthData) => {
 
   if (!response?.data.payload) {
     return {
-      message: 'error',
+      message: response?.data.message,
       payload: null,
     };
   }
@@ -29,7 +35,7 @@ const logInUser = async (data: IAuthData) => {
     });
   if (!response?.data.payload) {
     return {
-      message: 'error',
+      message: response?.data.message,
       payload: null,
     };
   }
@@ -42,11 +48,28 @@ const getMe = async () => {
     .catch((error: AxiosError<IResponse<null>>) => {
       return error.response;
     });
-  if (!response?.data.payload) {
+  if (!response?.data?.payload) {
     return null;
   }
 
   return response.data.payload.user;
+};
+
+const EditUserInfo = async (data: IEditUserData) => {
+  console.log('data====>', data);
+  const response = await configuredAxios.put<IResponse<{user: IUser}>>(
+    ServerBreakpoints.userEdit,
+    data,
+  );
+  console.log('EditUserInfo ====>', response.data);
+  if (!response?.data.payload) {
+    return {
+      message: response?.data.message,
+      payload: null,
+    };
+  }
+
+  return response.data;
 };
 
 export const refreshToken = async () => {
@@ -71,4 +94,5 @@ export default {
   signUpUser,
   logInUser,
   getMe,
+  EditUserInfo,
 };

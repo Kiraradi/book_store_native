@@ -4,6 +4,16 @@ export interface IUser {
   email: string;
 }
 
+export interface IEditUserData {
+  fullName?: string;
+  email?: string;
+}
+
+export interface IEditUserPassword {
+  oldPassword: string;
+  newPassword: string;
+}
+
 export interface IStore {
   user: IUser | null;
   pending: boolean;

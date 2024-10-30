@@ -1,12 +1,12 @@
 import React, {FC} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import ProfileForm from '../../modules/ProfileForm/ProfileForm';
 
 const ProfileScreen: FC = () => {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <ProfileForm />
-    </View>
+    </ScrollView>
   );
 };
 

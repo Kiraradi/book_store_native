@@ -37,10 +37,10 @@ const styles = StyleSheet.create({
   wrapper: {
     width: '100%',
     flexDirection: 'row',
-    height: 56,
+    height: 60,
     borderRadius: 16,
     backgroundColor: colors.light,
-    paddingLeft: 24,
+    paddingLeft: 15,
     justifyContent: 'flex-start',
     alignItems: 'center',
     gap: 16,
