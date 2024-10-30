@@ -2,36 +2,46 @@ import React, {FC, useState} from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
 import PoppinsText from '../../UI/CustomsTexts/PoppinsText';
 import {colors} from '../../assets/styles/colors';
-import {useAppSelector} from '../../store/hooks/useAppSelector';
 import UserAvatar from './components/UserAvatar/UserAvatar';
 import PersonalInformationCards from './components/PersonalInformationCards/PersonalInformationCards';
 import PersonalInfoEditForm from './components/PersonalInfoEditForm/PersonalInfoEditForm';
+import PasswordEdit from './components/PasswordEdit/PasswordEdit';
 
 const ProfileForm: FC = () => {
-  const [IsInformationEdit, setInformationEdit] = useState(false);
-  const user = useAppSelector(state => state.user.user);
-  console.log('===>', user);
+  const [isInformationEdit, setInformationEdit] = useState(false);
+  const [isPasswordEdit, setPasswordEdit] = useState(false);
   const changeInformationEdit = () => {
     setInformationEdit(prev => !prev);
   };
+  const changePasswordEdit = () => {
+    setPasswordEdit(prev => !prev);
+  };
+
   return (
-    <View style={styles.container}>
+    <View style={styles.wrapper}>
       <UserAvatar />
       <PoppinsText styles={styles.title}>{'Personal information'}</PoppinsText>
       <Pressable onPress={changeInformationEdit}>
         <PoppinsText styles={styles.text}>Change information</PoppinsText>
       </Pressable>
-      {IsInformationEdit ? (
+      {isInformationEdit ? (
         <PersonalInfoEditForm />
       ) : (
         <PersonalInformationCards />
       )}
+      <View style={styles.contaiser}>
+        <PoppinsText styles={styles.title}>{'Password'}</PoppinsText>
+        <Pressable onPress={changePasswordEdit}>
+          <PoppinsText styles={styles.text}>Change password</PoppinsText>
+        </Pressable>
+      </View>
+      {isPasswordEdit && <PasswordEdit />}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  wrapper: {
     padding: 15,
     width: '100%',
     flexDirection: 'column',
@@ -48,6 +58,11 @@ const styles = StyleSheet.create({
     color: colors.darkGreen,
     fontWeight: 600,
     textDecorationLine: 'underline',
+  },
+  contaiser: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
 

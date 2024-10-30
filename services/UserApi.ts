@@ -1,6 +1,7 @@
 import {
   IAuthData,
   IEditUserData,
+  IEditUserPasswordData,
   IResponse,
   ITokens,
   IUser,
@@ -56,12 +57,10 @@ const getMe = async () => {
 };
 
 const EditUserInfo = async (data: IEditUserData) => {
-  console.log('data====>', data);
   const response = await configuredAxios.put<IResponse<{user: IUser}>>(
     ServerBreakpoints.userEdit,
     data,
   );
-  console.log('EditUserInfo ====>', response.data);
   if (!response?.data.payload) {
     return {
       message: response?.data.message,
@@ -70,6 +69,16 @@ const EditUserInfo = async (data: IEditUserData) => {
   }
 
   return response.data;
+};
+
+const EditUserPassword = async (data: IEditUserPasswordData) => {
+  const response = await configuredAxios
+    .put<IResponse<null>>(ServerBreakpoints.userEditPassword, data)
+    .catch((error: AxiosError<IResponse<null>>) => {
+      return error.response;
+    });
+
+  return response?.data;
 };
 
 export const refreshToken = async () => {
@@ -95,4 +104,5 @@ export default {
   logInUser,
   getMe,
   EditUserInfo,
+  EdituserPassword: EditUserPassword,
 };

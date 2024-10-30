@@ -12,6 +12,12 @@ export interface IEditUserData {
 export interface IEditUserPassword {
   oldPassword: string;
   newPassword: string;
+  passwordReplay: string;
+}
+
+export interface IEditUserPasswordData {
+  password: string;
+  newPassword: string;
 }
 
 export interface IStore {

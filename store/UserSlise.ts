@@ -1,6 +1,11 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {IStore, IUser} from '../interfaces';
-import {editUserThunk, logInUserThunk, signUpUserThunk} from './Thunks';
+import {
+  editUserPasswordThunk,
+  editUserThunk,
+  logInUserThunk,
+  signUpUserThunk,
+} from './Thunks';
 
 const initialState: IStore = {
   user: null,
@@ -35,6 +40,10 @@ export const UserSlise = createSlice({
         state.hasError = false;
         state.pending = true;
       })
+      .addCase(editUserPasswordThunk.pending, state => {
+        state.hasError = false;
+        state.pending = true;
+      })
       .addCase(signUpUserThunk.fulfilled, (state, action) => {
         const user = action.payload;
         state.user = user;
@@ -53,6 +62,10 @@ export const UserSlise = createSlice({
         state.pending = false;
         state.hasError = false;
       })
+      .addCase(editUserPasswordThunk.fulfilled, state => {
+        state.pending = false;
+        state.hasError = false;
+      })
       .addCase(signUpUserThunk.rejected, state => {
         state.pending = false;
         state.hasError = true;
@@ -62,6 +75,10 @@ export const UserSlise = createSlice({
         state.hasError = true;
       })
       .addCase(editUserThunk.rejected, state => {
+        state.pending = false;
+        state.hasError = true;
+      })
+      .addCase(editUserPasswordThunk.rejected, state => {
         state.pending = false;
         state.hasError = true;
       });

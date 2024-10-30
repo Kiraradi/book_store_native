@@ -4,5 +4,5 @@ export enum ServerBreakpoints {
   getMe = '/auth/getMe',
   refresh = '/auth/refreshAccessToken',
   userEdit = '/user/edit',
-  userEditPassword = '/user/password',
+  userEditPassword = '/user/editPassword',
 }

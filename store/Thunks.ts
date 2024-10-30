@@ -1,5 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {IAuthData, IEditUserData} from '../interfaces';
+import {IAuthData, IEditUserData, IEditUserPasswordData} from '../interfaces';
 import UserApi from '../services/UserApi';
 import TokenService from '../services/TokenService';
 
@@ -39,5 +39,16 @@ export const editUserThunk = createAsyncThunk(
       return thunkAPI.rejectWithValue(response.message);
     }
     return response.payload.user;
+  },
+);
+
+export const editUserPasswordThunk = createAsyncThunk(
+  'user/editPasswordUser',
+  async (data: IEditUserPasswordData, thunkAPI) => {
+    const response = await UserApi.EdituserPassword(data);
+    if (!response) {
+      return thunkAPI.rejectWithValue('error');
+    }
+    return response.payload;
   },
 );
