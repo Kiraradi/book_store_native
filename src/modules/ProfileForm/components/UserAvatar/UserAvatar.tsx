@@ -11,7 +11,7 @@ import {launchImageLibrary, MediaType} from 'react-native-image-picker';
 import UserApi from '../../../../services/UserApi';
 import {useAppDispatch} from '../../../../store/hooks/useAppDispatch';
 import {addUser} from '../../../../store/UserSlise';
-import {SERVER_URL} from '../../../../config';
+import {SERVER_URL} from '../../../../../config';
 import CustomTabButton from '../../../../UI/Components/CustomTabButton';
 
 const UserAvatar: FC = () => {
@@ -43,8 +43,11 @@ const UserAvatar: FC = () => {
         extension: extension,
       };
 
-      const userWithAvatar = await UserApi.saveAtatar(data);
-      dispatch(addUser(userWithAvatar));
+      const userWithAvatar = await UserApi.saveAtatar(data).catch(() => null);
+
+      if (userWithAvatar) {
+        dispatch(addUser(userWithAvatar));
+      }
     }
   };
 

@@ -2,58 +2,65 @@ import React, {FC, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {LogInSchema} from './LogInSchema';
+import {SingUpSchema} from './SignUpSchema';
 import CustomInput from '../../UI/Components/CustomInput/CustomInput';
-import {FONT_FAMILY} from '../../config/customFont';
+import {FONT_FAMILY} from '../../../config/customFont';
 import {colors} from '../../assets/styles/colors';
 import TextError from '../../UI/TextError/TextError';
 import CustomButton from '../../UI/CustomButton/CustomButton';
-import {
-  NavigationProp,
-  ParamListBase,
-  useNavigation,
-} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import PoppinsText from '../../UI/CustomsTexts/PoppinsText';
-import {IAuthData} from '../../interfaces';
+import {ISignUpData} from '../../interfaces';
 import {useAppDispatch} from '../../store/hooks/useAppDispatch';
-import {logInUserThunk} from '../../store/Thunks';
+import {signUpUserThunk} from '../../store/Thunks';
 
-const LogInForm: FC = () => {
+const SingUpForm: FC = () => {
   const [isPasswordSecure, setPasswordSecure] = useState(true);
-  const navigation: NavigationProp<ParamListBase> = useNavigation();
+  const [isPasswordReplaySecure, setPasswordReplaySecure] = useState(true);
+  const navigation = useNavigation();
   const dispatch = useAppDispatch();
   const {
     watch,
     control,
     formState: {errors},
-  } = useForm<IAuthData>({
-    resolver: yupResolver(LogInSchema),
-    mode: 'all',
+  } = useForm<ISignUpData>({
+    resolver: yupResolver(SingUpSchema),
+    mode: 'onChange',
   });
 
-  const handleLogIn = async () => {
-    if (!watch('email') || !watch('password')) {
+  const handleSignUpUser = async () => {
+    if (!watch('email') || !watch('password') || !watch('passwordReplay')) {
       return;
     }
-    if (errors.email || errors.password) {
+    if (errors.email || errors.password || errors.passwordReplay) {
+      return;
+    }
+
+    if (watch('password') !== watch('passwordReplay')) {
       return;
     }
 
     const data = {
-      ...watch(),
+      email: watch('email'),
+      password: watch('password'),
     };
-    dispatch(logInUserThunk(data));
+
+    dispatch(signUpUserThunk(data));
   };
 
   const changePasswordSecure = () => {
     setPasswordSecure(prev => !prev);
   };
 
+  const changePasswordReplaySecure = () => {
+    setPasswordReplaySecure(prev => !prev);
+  };
+
   return (
     <View style={styles.wrapper}>
-      <Text style={styles.title}>Log In</Text>
+      <Text style={styles.title}>Sign Up</Text>
       <View style={styles.conteiner}>
-        <Controller<IAuthData>
+        <Controller<ISignUpData>
           control={control}
           render={({field: {onChange, value}}) => {
             return (
@@ -90,7 +97,7 @@ const LogInForm: FC = () => {
         />
       </View>
       <View style={styles.conteiner}>
-        <Controller<IAuthData>
+        <Controller<ISignUpData>
           control={control}
           render={({field: {onChange, value}}) => {
             return (
@@ -131,17 +138,59 @@ const LogInForm: FC = () => {
           }
         />
       </View>
+      <View style={styles.conteiner}>
+        <Controller<ISignUpData>
+          control={control}
+          render={({field: {onChange, value}}) => {
+            return (
+              <CustomInput
+                img={
+                  isPasswordReplaySecure
+                    ? require('../../assets/icons/Hide.png')
+                    : require('../../assets/icons/View.png')
+                }
+                value={value}
+                onChange={value => onChange(value)}
+                placeholder="Password replay"
+                isSecure={isPasswordReplaySecure}
+                callbackForImg={changePasswordReplaySecure}
+                validationStatus={
+                  value?.length > 0
+                    ? errors.passwordReplay?.message
+                      ? 'error'
+                      : 'success'
+                    : null
+                }
+              />
+            );
+          }}
+          name="passwordReplay"
+          rules={{required: true}}
+        />
+        <TextError
+          fieldName="Password Replay"
+          text="Repeat your password without errors"
+          isBeingFilledIn={watch('passwordReplay')?.length > 0}
+          validationStatus={
+            watch('passwordReplay')?.length > 0
+              ? errors.passwordReplay?.message
+                ? 'error'
+                : 'success'
+              : null
+          }
+        />
+      </View>
       <View style={styles.buttonBar}>
         <CustomButton
-          text={'Log In'}
-          callBack={handleLogIn}
+          text={'Sign Up'}
+          callBack={handleSignUpUser}
           styles={styles.button}
         />
         <PoppinsText styles={styles.text}>or</PoppinsText>
         <CustomButton
-          text="Sign Up"
+          text="Log In"
           callBack={() => {
-            navigation.navigate('SignUp');
+            navigation.goBack();
           }}
           styles={styles.button}
         />
@@ -155,7 +204,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingLeft: 15,
     paddingRight: 15,
-    gap: 20,
+    gap: 15,
   },
   title: {
     fontFamily: FONT_FAMILY.Poppins_Bold,
@@ -167,7 +216,6 @@ const styles = StyleSheet.create({
   conteiner: {
     flexDirection: 'column',
     gap: 15,
-    alignContent: 'flex-start',
   },
   buttonBar: {
     marginTop: 10,
@@ -183,4 +231,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LogInForm;
+export default SingUpForm;

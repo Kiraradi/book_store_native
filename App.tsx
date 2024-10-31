@@ -6,10 +6,10 @@
  */
 
 import React from 'react';
-import Navigation from './Navigation/Navagation';
+import Navigation from './src/Navigation/Navagation';
 import {Provider} from 'react-redux';
-import {makeStore} from './store';
-import AuthProvider from './hocs/AuthProvider';
+import {makeStore} from './src/store';
+import AuthProvider from './src/hocs/AuthProvider';
 
 function App(): React.JSX.Element {
   return (

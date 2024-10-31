@@ -1,6 +1,5 @@
 import React, {FC} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
-
 const Header: FC = () => {
   return (
     <View style={styles.container}>

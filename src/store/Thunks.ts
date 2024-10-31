@@ -7,8 +7,8 @@ export const signUpUserThunk = createAsyncThunk(
   'user/signUpUser',
   async (data: IAuthData, thunkAPI) => {
     const response = await UserApi.signUpUser(data);
-    if (!response.payload) {
-      return thunkAPI.rejectWithValue(response.message);
+    if (!response || !response.payload) {
+      return thunkAPI.rejectWithValue('error');
     }
     await TokenService.saveAccessToken(response.payload.tokens.accessToken);
     await TokenService.saveRefreshToken(response.payload.tokens.refreshToken);
@@ -21,8 +21,8 @@ export const logInUserThunk = createAsyncThunk(
   'user/logInUser',
   async (data: IAuthData, thunkAPI) => {
     const response = await UserApi.logInUser(data);
-    if (!response.payload) {
-      return thunkAPI.rejectWithValue(response.message);
+    if (!response || !response.payload) {
+      return thunkAPI.rejectWithValue('error');
     }
     await TokenService.saveAccessToken(response.payload.tokens.accessToken);
     await TokenService.saveRefreshToken(response.payload.tokens.refreshToken);
@@ -34,9 +34,9 @@ export const logInUserThunk = createAsyncThunk(
 export const editUserThunk = createAsyncThunk(
   'user/editUser',
   async (data: IEditUserData, thunkAPI) => {
-    const response = await UserApi.EditUserInfo(data);
-    if (!response.payload) {
-      return thunkAPI.rejectWithValue(response.message);
+    const response = await UserApi.EditUserInfo(data).catch(() => null);
+    if (!response) {
+      return thunkAPI.rejectWithValue('error');
     }
     return response.payload.user;
   },

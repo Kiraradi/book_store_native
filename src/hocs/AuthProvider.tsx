@@ -15,9 +15,11 @@ const AuthProvider: FC<IAuthProvider> = props => {
 
   useEffect(() => {
     const checkUser = async () => {
-      const user = await UserApi.getMe();
-      dispatch(addUser(user));
+      const user = await UserApi.getMe().catch(() => {
+        return null;
+      });
       dispatch(changePending(false));
+      dispatch(addUser(user));
     };
 
     checkUser();

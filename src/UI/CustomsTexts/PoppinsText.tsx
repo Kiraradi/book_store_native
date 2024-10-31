@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {StyleSheet, Text} from 'react-native';
-import {FONT_FAMILY} from '../../config/customFont';
+import {FONT_FAMILY} from '../../../config/customFont';
 
 interface IPoppinsText {
   children: string;
