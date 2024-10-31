@@ -45,7 +45,7 @@ export const editUserThunk = createAsyncThunk(
 export const editUserPasswordThunk = createAsyncThunk(
   'user/editPasswordUser',
   async (data: IEditUserPasswordData, thunkAPI) => {
-    const response = await UserApi.EdituserPassword(data);
+    const response = await UserApi.EditUserPassword(data);
     if (!response) {
       return thunkAPI.rejectWithValue('error');
     }

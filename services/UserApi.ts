@@ -3,6 +3,7 @@ import {
   IEditUserData,
   IEditUserPasswordData,
   IResponse,
+  ISaveAtatarData,
   ITokens,
   IUser,
 } from '../interfaces';
@@ -50,6 +51,19 @@ const getMe = async () => {
       return error.response;
     });
   if (!response?.data?.payload) {
+    return null;
+  }
+
+  return response.data.payload.user;
+};
+
+const saveAtatar = async (data: ISaveAtatarData) => {
+  const response = await configuredAxios.post<IResponse<{user: IUser}>>(
+    ServerBreakpoints.saveAvatar,
+    data,
+  );
+
+  if (!response.data.payload) {
     return null;
   }
 
@@ -104,5 +118,6 @@ export default {
   logInUser,
   getMe,
   EditUserInfo,
-  EdituserPassword: EditUserPassword,
+  EditUserPassword,
+  saveAtatar,
 };

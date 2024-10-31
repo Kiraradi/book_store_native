@@ -5,4 +5,5 @@ export enum ServerBreakpoints {
   refresh = '/auth/refreshAccessToken',
   userEdit = '/user/edit',
   userEditPassword = '/user/editPassword',
+  saveAvatar = '/user/saveAvatar',
 }

@@ -39,10 +39,11 @@ const PersonalInfoEditForm: FC = () => {
     if (errors.email || errors.fullName) {
       return;
     }
-
-    const data: IEditUserData = {
-      fullName: watch('fullName') ? watch('fullName') : '',
-    };
+    const fillName = watch('fullName');
+    const data: IEditUserData = {};
+    if (fillName && fillName.length > 0) {
+      data.fullName = fillName;
+    }
     if (watch('email') && watch('email') !== email) {
       data.email = watch('email');
     }

@@ -4,11 +4,12 @@ import {colors} from '../../assets/styles/colors';
 
 interface ICustomTabButton {
   img?: ImageSourcePropType;
+  styles?: object;
 }
 
 const CustomTabButton: FC<ICustomTabButton> = props => {
   return (
-    <View style={styles.button}>
+    <View style={[styles.button, props.styles]}>
       <Image style={styles.img} source={props.img} />
     </View>
   );

@@ -2,6 +2,7 @@ export interface IUser {
   id: number;
   fullName: string | null;
   email: string;
+  avatar: string | null;
 }
 
 export interface IEditUserData {
@@ -45,4 +46,9 @@ export interface IResponse<T> {
 export interface ITokens {
   accessToken: string;
   refreshToken: string;
+}
+
+export interface ISaveAtatarData {
+  baseImg: string;
+  extension: string;
 }

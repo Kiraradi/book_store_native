@@ -1,8 +1,7 @@
 import axios from 'axios';
 import TokenService from '../services/TokenService';
 import {refreshToken} from '../services/UserApi';
-
-const SERVER_URL = 'http://10.0.2.2:4000';
+import {SERVER_URL} from '../config';
 
 const instance = axios.create({
   baseURL: `${SERVER_URL}`,
