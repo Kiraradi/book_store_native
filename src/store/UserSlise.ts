@@ -38,11 +38,9 @@ export const UserSlise = createSlice({
       })
       .addCase(editUserThunk.pending, state => {
         state.hasError = false;
-        state.pending = true;
       })
       .addCase(editUserPasswordThunk.pending, state => {
         state.hasError = false;
-        state.pending = true;
       })
       .addCase(signUpUserThunk.fulfilled, (state, action) => {
         const user = action.payload;

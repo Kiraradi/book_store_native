@@ -45,7 +45,6 @@ const saveAtatar = async (data: ISaveAtatarData) => {
     ServerBreakpoints.saveAvatar,
     data,
   );
-
   if (!response.data.payload) {
     return null;
   }

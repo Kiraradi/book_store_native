@@ -17,6 +17,13 @@ const ProfileForm: FC = () => {
     setPasswordEdit(prev => !prev);
   };
 
+  const closePersonalInfoEditForm = () => {
+    setInformationEdit(false);
+  };
+  const closePasswordEditForm = () => {
+    setPasswordEdit(false);
+  };
+
   return (
     <View style={styles.wrapper}>
       <UserAvatar />
@@ -25,7 +32,7 @@ const ProfileForm: FC = () => {
         <PoppinsText styles={styles.text}>Change information</PoppinsText>
       </Pressable>
       {isInformationEdit ? (
-        <PersonalInfoEditForm />
+        <PersonalInfoEditForm close={closePersonalInfoEditForm} />
       ) : (
         <PersonalInformationCards />
       )}
@@ -35,7 +42,7 @@ const ProfileForm: FC = () => {
           <PoppinsText styles={styles.text}>Change password</PoppinsText>
         </Pressable>
       </View>
-      {isPasswordEdit && <PasswordEdit />}
+      {isPasswordEdit && <PasswordEdit close={closePasswordEditForm} />}
     </View>
   );
 };

@@ -10,7 +10,11 @@ import CustomInput from '../../../../UI/Components/CustomInput/CustomInput';
 import TextError from '../../../../UI/TextError/TextError';
 import {editUserPasswordThunk} from '../../../../store/Thunks';
 
-const PasswordEdit: FC = () => {
+interface IPasswordEdit {
+  close: () => void;
+}
+
+const PasswordEdit: FC<IPasswordEdit> = props => {
   const [isOldPasswordSecure, setOldPasswordSecure] = useState(true);
   const [isNewPasswordSecure, setNewPasswordSecure] = useState(true);
   const [isNewPasswordReplaySecure, setNewPasswordReplaySecure] =
@@ -47,6 +51,7 @@ const PasswordEdit: FC = () => {
     };
 
     dispatch(editUserPasswordThunk(data));
+    props.close();
   };
 
   return (

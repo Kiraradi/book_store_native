@@ -11,7 +11,11 @@ import {IEditUserData} from '../../../../interfaces';
 import {useAppDispatch} from '../../../../store/hooks/useAppDispatch';
 import {editUserThunk} from '../../../../store/Thunks';
 
-const PersonalInfoEditForm: FC = () => {
+interface IPersonalInfoEditForm {
+  close: () => void;
+}
+
+const PersonalInfoEditForm: FC<IPersonalInfoEditForm> = props => {
   const email = useAppSelector(state => state.user.user?.email);
   const dispatch = useAppDispatch();
   const {
@@ -48,6 +52,7 @@ const PersonalInfoEditForm: FC = () => {
       data.email = watch('email');
     }
     dispatch(editUserThunk(data));
+    props.close();
   };
 
   return (

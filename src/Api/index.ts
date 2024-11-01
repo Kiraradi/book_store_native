@@ -4,6 +4,7 @@ import {refreshToken} from '../services/UserApi';
 import {SERVER_URL} from '../../config';
 
 let isRefreshMode: null | Promise<void>;
+let requestAttemptCounter = 0;
 
 const instance = axios.create({
   baseURL: `${SERVER_URL}`,
@@ -22,21 +23,24 @@ instance.interceptors.request.use(
 );
 
 instance.interceptors.response.use(
-  response => {
-    return response;
-  },
+  response => response,
   async function (error) {
     const originalRequest = error.config;
 
-    if (error.response.status === 403) {
+    if (error.response.status === 403 && requestAttemptCounter < 5) {
+      requestAttemptCounter++;
       if (!isRefreshMode) {
-        isRefreshMode = refreshToken();
+        isRefreshMode = refreshToken().then(() => {
+          isRefreshMode = null;
+        });
       }
+
       await isRefreshMode.catch(newError => {
+        isRefreshMode = null;
         console.log('REFRESH TOKEN ERROR', newError.response.status);
+        requestAttemptCounter = 0;
         return Promise.reject(newError);
       });
-      await TokenService.getAccessToken();
 
       return instance(originalRequest);
     }
