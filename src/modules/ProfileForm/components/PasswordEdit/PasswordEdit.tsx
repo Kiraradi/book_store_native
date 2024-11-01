@@ -8,7 +8,7 @@ import {StyleSheet, View} from 'react-native';
 import CustomButton from '../../../../UI/CustomButton/CustomButton';
 import CustomInput from '../../../../UI/Components/CustomInput/CustomInput';
 import TextError from '../../../../UI/TextError/TextError';
-import {editUserPasswordThunk} from '../../../../store/Thunks';
+import {editUserPasswordThunk} from '../../../../store/user/thunks';
 
 interface IPasswordEdit {
   close: () => void;

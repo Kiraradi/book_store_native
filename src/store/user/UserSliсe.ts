@@ -1,11 +1,11 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {IStore, IUser} from '../interfaces';
+import {IStore, IUser} from '../../interfaces';
 import {
   editUserPasswordThunk,
   editUserThunk,
   logInUserThunk,
   signUpUserThunk,
-} from './Thunks';
+} from './thunks';
 
 const initialState: IStore = {
   user: null,

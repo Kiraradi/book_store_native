@@ -4,7 +4,7 @@ import {useAppSelector} from '../store/hooks/useAppSelector';
 import Spinner from '../UI/Spinner/Spinner';
 import UserApi from '../services/UserApi';
 import {useAppDispatch} from '../store/hooks/useAppDispatch';
-import {addUser, changePending} from '../store/UserSlise';
+import {addUser, changePending} from '../store/user/UserSliсe';
 
 interface IAuthProvider {
   children: ReactNode;

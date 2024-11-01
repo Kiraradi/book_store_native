@@ -1,7 +1,11 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {IAuthData, IEditUserData, IEditUserPasswordData} from '../interfaces';
-import UserApi from '../services/UserApi';
-import TokenService from '../services/TokenService';
+import {
+  IAuthData,
+  IEditUserData,
+  IEditUserPasswordData,
+} from '../../interfaces';
+import UserApi from '../../services/UserApi';
+import TokenService from '../../services/TokenService';
 
 export const signUpUserThunk = createAsyncThunk(
   'user/signUpUser',

@@ -12,7 +12,7 @@ import {useNavigation} from '@react-navigation/native';
 import PoppinsText from '../../UI/CustomsTexts/PoppinsText';
 import {ISignUpData} from '../../interfaces';
 import {useAppDispatch} from '../../store/hooks/useAppDispatch';
-import {signUpUserThunk} from '../../store/Thunks';
+import {signUpUserThunk} from '../../store/user/thunks';
 
 const SingUpForm: FC = () => {
   const [isPasswordSecure, setPasswordSecure] = useState(true);

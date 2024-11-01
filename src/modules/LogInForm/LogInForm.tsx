@@ -16,7 +16,7 @@ import {
 import PoppinsText from '../../UI/CustomsTexts/PoppinsText';
 import {IAuthData} from '../../interfaces';
 import {useAppDispatch} from '../../store/hooks/useAppDispatch';
-import {logInUserThunk} from '../../store/Thunks';
+import {logInUserThunk} from '../../store/user/thunks';
 
 const LogInForm: FC = () => {
   const [isPasswordSecure, setPasswordSecure] = useState(true);

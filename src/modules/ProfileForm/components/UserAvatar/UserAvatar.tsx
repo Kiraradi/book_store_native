@@ -7,10 +7,14 @@ import {
   View,
 } from 'react-native';
 import {useAppSelector} from '../../../../store/hooks/useAppSelector';
-import {launchImageLibrary, MediaType} from 'react-native-image-picker';
+import {
+  launchImageLibrary,
+  MediaType,
+  PhotoQuality,
+} from 'react-native-image-picker';
 import UserApi from '../../../../services/UserApi';
 import {useAppDispatch} from '../../../../store/hooks/useAppDispatch';
-import {addUser} from '../../../../store/UserSlise';
+import {addUser} from '../../../../store/user/UserSliсe';
 import {SERVER_URL} from '../../../../../config';
 import CustomTabButton from '../../../../UI/Components/CustomTabButton';
 
@@ -33,13 +37,14 @@ const UserAvatar: FC = () => {
       includeBase64: true,
       maxHeight: 1000,
       maxWidth: 1000,
+      quality: 1 as PhotoQuality,
     };
     const photo = await launchImageLibrary(options);
     if (photo.assets && photo.assets[0].base64 && photo.assets[0].fileName) {
       const fileName = photo.assets[0].fileName;
       const extension = fileName.substring(fileName.indexOf('.') + 1);
       const data = {
-        baseImg: photo.assets[0]['base64'],
+        baseImg: photo.assets[0].base64,
         extension: extension,
       };
 

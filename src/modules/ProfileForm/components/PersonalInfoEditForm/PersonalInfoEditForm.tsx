@@ -9,7 +9,7 @@ import {useAppSelector} from '../../../../store/hooks/useAppSelector';
 import CustomButton from '../../../../UI/CustomButton/CustomButton';
 import {IEditUserData} from '../../../../interfaces';
 import {useAppDispatch} from '../../../../store/hooks/useAppDispatch';
-import {editUserThunk} from '../../../../store/Thunks';
+import {editUserThunk} from '../../../../store/user/thunks';
 
 interface IPersonalInfoEditForm {
   close: () => void;

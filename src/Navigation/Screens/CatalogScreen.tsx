@@ -3,7 +3,7 @@ import {Button, Text, View} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useAppDispatch} from '../../store/hooks/useAppDispatch';
 import TokenService from '../../services/TokenService';
-import {logOut} from '../../store/UserSlise';
+import {logOut} from '../../store/user/UserSliсe';
 
 type RootStackParamList = {
   Catalog: undefined;
