@@ -27,15 +27,21 @@ const logInUser = async (data: IAuthData) => {
   const response = await configuredAxios.post<IResponse<IPayloadSignUpUser>>(
     ServerBreakpoints.logIn,
     data,
-  );
+  ).catch((error)=> {
+    console.log(error)
+    throw new Error
+  })
 
   return response.data;
 };
 
 const getMe = async () => {
   const response = await configuredAxios.get<IResponse<IPayloadSignUpUser>>(
-    ServerBreakpoints.getMe,
-  );
+    (`${SERVER_URL}${ServerBreakpoints.getMe}`),
+  ).catch((error)=> {
+    console.log(error)
+    throw new Error
+  })
 
   return response.data.payload.user;
 };
