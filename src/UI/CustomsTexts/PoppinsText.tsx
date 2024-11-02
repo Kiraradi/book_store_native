@@ -1,10 +1,10 @@
 import React, {FC} from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {StyleProp, StyleSheet, Text, TextStyle} from 'react-native';
 import {FONT_FAMILY} from '../../../config/customFont';
 
 interface IPoppinsText {
   children: string;
-  styles?: object;
+  styles?: StyleProp<TextStyle>;
 }
 
 const PoppinsText: FC<IPoppinsText> = props => {

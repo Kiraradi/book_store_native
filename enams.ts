@@ -6,4 +6,6 @@ export enum ServerBreakpoints {
   userEdit = '/user/edit',
   userEditPassword = '/user/editPassword',
   saveAvatar = '/user/saveAvatar',
+  book = '/book',
+  allBooks = '/book/all',
 }

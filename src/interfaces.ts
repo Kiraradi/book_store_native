@@ -64,7 +64,7 @@ export interface IBook {
 }
 
 export interface IBookStore {
-  books: IBookStore[];
+  books: IBook[];
   pending: boolean;
   hasError: boolean;
 }

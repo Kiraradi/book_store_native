@@ -3,7 +3,6 @@ import React, {FC} from 'react';
 import {StyleSheet, View} from 'react-native';
 import LogInForm from '../../modules/LogInForm/LogInForm';
 import Header from '../../modules/Header/Header';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 type RootStackParamList = {
   LogIn: undefined;
@@ -12,18 +11,8 @@ type RootStackParamList = {
 type Props = NativeStackScreenProps<RootStackParamList, 'LogIn'>;
 
 const LogInScreen: FC<Props> = () => {
-  const insets = useSafeAreaInsets();
   return (
-    <View
-      style={[
-        {
-          paddingTop: insets.top,
-          paddingBottom: insets.bottom,
-          paddingLeft: insets.left,
-          paddingRight: insets.right,
-        },
-        styles.container,
-      ]}>
+    <View style={[styles.container]}>
       <Header />
       <LogInForm />
     </View>

@@ -5,7 +5,7 @@ import TabStack from './TabStack';
 
 type ParamsListStack = {
   Tab: undefined;
-  Book: {id: string};
+  Book: {id: number};
 };
 
 const Stack = createNativeStackNavigator<ParamsListStack>();
@@ -21,7 +21,7 @@ const RootStack: FC = () => {
       <Stack.Screen
         name="Book"
         component={BookScreen}
-        initialParams={{id: '12'}}
+        initialParams={{id: 0}}
       />
     </Stack.Navigator>
   );

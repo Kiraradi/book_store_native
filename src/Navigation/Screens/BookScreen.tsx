@@ -3,7 +3,7 @@ import {Button, Text, View} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 type RootStackParamList = {
-  Book: {id: string};
+  Book: {id: number};
   Catalog: undefined;
 };
 type Props = NativeStackScreenProps<RootStackParamList, 'Book'>;
