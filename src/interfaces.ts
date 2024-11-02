@@ -52,3 +52,19 @@ export interface ISaveAtatarData {
   baseImg: string;
   extension: string;
 }
+
+export interface IBook {
+  id: number;
+  name: string;
+  cover: string;
+  description: string;
+  price: number;
+  genre: string;
+  author: string;
+}
+
+export interface IBookStore {
+  books: IBookStore[];
+  pending: boolean;
+  hasError: boolean;
+}
