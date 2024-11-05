@@ -4,13 +4,7 @@ import CartScreen from '../Screens/CartScreen';
 import FavoriteScreen from '../Screens/FavoriteScreen';
 import ProfileScreen from '../Screens/ProfileScreen';
 import CatalogScreen from '../Screens/CatalogScreen';
-
-type ParamsListTab = {
-  Catalog: undefined;
-  Cart: undefined;
-  Favorit: undefined;
-  Profile: undefined;
-};
+import {ParamsListTab} from '../Screens/types';
 
 const Tab = createBottomTabNavigator<ParamsListTab>();
 

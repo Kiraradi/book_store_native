@@ -4,18 +4,27 @@ import {Image, Pressable, StyleSheet, View} from 'react-native';
 import {SERVER_URL} from '../../../config';
 import PoppinsText from '../../UI/CustomsTexts/PoppinsText';
 import CustomButton from '../../UI/CustomButton/CustomButton';
+import {colors} from '../../assets/styles/colors';
+import {useNavigation} from '@react-navigation/native';
+import {BookScreenProps} from '../../Navigation/Screens/types';
 
 const BookLabel: FC<IBook> = props => {
+  const navigator = useNavigation<BookScreenProps>();
+  const goToBook = () => {
+    navigator.navigate('Book', {id: props.id});
+  };
   return (
     <View style={styles.wrapper}>
-      <Pressable style={styles.coverButton}>
+      <Pressable onPress={goToBook} style={styles.coverButton}>
         <Image
           style={styles.img}
           source={{uri: `${SERVER_URL}${props.cover}`}}
         />
       </Pressable>
-      <PoppinsText styles={styles.name}>{props.name}</PoppinsText>
-      <PoppinsText styles={styles.author}>{props.author}</PoppinsText>
+      <View style={styles.container}>
+        <PoppinsText styles={styles.name}>{props.name}</PoppinsText>
+        <PoppinsText styles={styles.author}>{props.author}</PoppinsText>
+      </View>
       <CustomButton text={`$ ${props.price} USD`} callBack={() => null} />
     </View>
   );
@@ -33,11 +42,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   img: {width: '100%', height: '100%', borderRadius: 16, maxHeight: 350},
+  container: {
+    paddingVertical: 10,
+    alignItems: 'flex-start',
+    gap: 5,
+  },
   name: {
     fontSize: 18,
+    color: colors.darkBlue,
   },
   author: {
     fontSize: 18,
+    color: colors.darkGrey,
   },
 });
 

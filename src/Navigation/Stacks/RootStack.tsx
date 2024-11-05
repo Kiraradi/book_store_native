@@ -2,13 +2,9 @@ import React, {FC} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BookScreen from '../Screens/BookScreen';
 import TabStack from './TabStack';
+import {RootStackParamList} from '../Screens/types';
 
-type ParamsListStack = {
-  Tab: undefined;
-  Book: {id: number};
-};
-
-const Stack = createNativeStackNavigator<ParamsListStack>();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const RootStack: FC = () => {
   return (
