@@ -1,11 +1,8 @@
 import React, {FC} from 'react';
 import {Button, Text, View} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from './types';
 
-type RootStackParamList = {
-  Book: {id: number};
-  Catalog: undefined;
-};
 type Props = NativeStackScreenProps<RootStackParamList, 'Book'>;
 
 const BookScreen: FC<Props> = props => {

@@ -3,13 +3,9 @@ import React, {FC} from 'react';
 import LogInScreen from '../Screens/LogInScreen';
 import SignUpScreen from '../Screens/SignUpScreen';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {AuthStackParamList} from '../Screens/types';
 
-type ParamsListStack = {
-  LogIn: undefined;
-  SignUp: undefined;
-};
-
-const Stack = createNativeStackNavigator<ParamsListStack>();
+const Stack = createNativeStackNavigator<AuthStackParamList>();
 
 const AuthStack: FC = () => {
   const insets = useSafeAreaInsets();

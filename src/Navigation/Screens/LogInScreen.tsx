@@ -3,12 +3,9 @@ import React, {FC} from 'react';
 import {StyleSheet, View} from 'react-native';
 import LogInForm from '../../modules/LogInForm/LogInForm';
 import Header from '../../modules/Header/Header';
+import {AuthStackParamList} from './types';
 
-type RootStackParamList = {
-  LogIn: undefined;
-  SingUp: undefined;
-};
-type Props = NativeStackScreenProps<RootStackParamList, 'LogIn'>;
+type Props = NativeStackScreenProps<AuthStackParamList, 'LogIn'>;
 
 const LogInScreen: FC<Props> = () => {
   return (

@@ -6,11 +6,8 @@ import {useDispatch} from 'react-redux';
 import {getAllBooksThunk} from '../../store/book/thunks';
 import {AppDispatch} from '../../store';
 import BookLabel from '../../modules/BookLabel/BookLabel';
+import {RootStackParamList} from './types';
 
-type RootStackParamList = {
-  Catalog: undefined;
-  Book: {id: number};
-};
 type Props = NativeStackScreenProps<RootStackParamList, 'Catalog'>;
 
 const CatalogScreen: FC<Props> = () => {
