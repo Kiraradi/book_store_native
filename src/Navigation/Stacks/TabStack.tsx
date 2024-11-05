@@ -5,14 +5,19 @@ import FavoriteScreen from '../Screens/FavoriteScreen';
 import ProfileScreen from '../Screens/ProfileScreen';
 import CatalogScreen from '../Screens/CatalogScreen';
 import {ParamsListTab} from '../Screens/types';
+import MyTabBar from '../../UI/MyTabBar/MyTabBar';
 
 const Tab = createBottomTabNavigator<ParamsListTab>();
 
 const TabStack: FC = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator tabBar={props => <MyTabBar {...props} />}>
       <Tab.Screen name="Catalog" component={CatalogScreen} />
-      <Tab.Screen name="Cart" component={CartScreen} />
+      <Tab.Screen
+        name="Cart"
+        component={CartScreen}
+        options={{tabBarBadge: 0}}
+      />
       <Tab.Screen name="Favorit" component={FavoriteScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
