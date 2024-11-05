@@ -7,11 +7,29 @@ import CustomButton from '../../UI/CustomButton/CustomButton';
 import {colors} from '../../assets/styles/colors';
 import {useNavigation} from '@react-navigation/native';
 import {BookScreenProps} from '../../Navigation/Screens/types';
+import {useAppDispatch} from '../../store/hooks/useAppDispatch';
+import {addBookToCart} from '../../store/cart/cartSlice';
+import {Notifier, Easing} from 'react-native-notifier';
 
 const BookLabel: FC<IBook> = props => {
   const navigator = useNavigation<BookScreenProps>();
+  const dispatch = useAppDispatch();
   const goToBook = () => {
     navigator.navigate('Book', {id: props.id});
+  };
+
+  const addToCart = async () => {
+    dispatch(addBookToCart(props));
+    Notifier.showNotification({
+      title: 'John Doe',
+      description: 'Hello! Can you help me with notifications?',
+      duration: 0,
+      showAnimationDuration: 800,
+      showEasing: Easing.bounce,
+      onHidden: () => console.log('Hidden'),
+      onPress: () => console.log('Press'),
+      hideOnPress: false,
+    });
   };
   return (
     <View style={styles.wrapper}>
@@ -29,7 +47,7 @@ const BookLabel: FC<IBook> = props => {
           {props.author}
         </PoppinsText>
       </View>
-      <CustomButton text={`$ ${props.price} USD`} callBack={() => null} />
+      <CustomButton text={`$ ${props.price} USD`} callBack={addToCart} />
     </View>
   );
 };

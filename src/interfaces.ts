@@ -68,3 +68,7 @@ export interface IBookStore {
   pending: boolean;
   hasError: boolean;
 }
+
+export interface ICartStore {
+  books: IBook[];
+}

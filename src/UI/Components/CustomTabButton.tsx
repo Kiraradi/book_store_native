@@ -21,7 +21,7 @@ const CustomTabButton: FC<ICustomTabButton> = props => {
       <Image style={styles.img} source={props.img} />
       {props.bagde && (
         <View style={styles.badge}>
-          <PoppinsText>{props.bagde}</PoppinsText>
+          <PoppinsText styles={styles.badgeText}>{props.bagde}</PoppinsText>
         </View>
       )}
     </View>
@@ -58,15 +58,18 @@ const styles = StyleSheet.create({
 
   badge: {
     position: 'absolute',
-    top: -8,
-    right: -8,
+    top: -11,
+    right: -11,
     backgroundColor: colors.green,
-    width: 20,
-    height: 20,
-    borderRadius: 10,
+    width: 22,
+    height: 22,
+    borderRadius: 11,
     alignItems: 'center',
     justifyContent: 'center',
     color: colors.dark,
+  },
+  badgeText: {
+    fontSize: 12,
   },
 });
 
