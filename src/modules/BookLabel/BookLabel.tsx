@@ -22,8 +22,12 @@ const BookLabel: FC<IBook> = props => {
         />
       </Pressable>
       <View style={styles.container}>
-        <PoppinsText styles={styles.name}>{props.name}</PoppinsText>
-        <PoppinsText styles={styles.author}>{props.author}</PoppinsText>
+        <PoppinsText numberOfLines={1} styles={styles.name}>
+          {props.name}
+        </PoppinsText>
+        <PoppinsText numberOfLines={1} styles={styles.author}>
+          {props.author}
+        </PoppinsText>
       </View>
       <CustomButton text={`$ ${props.price} USD`} callBack={() => null} />
     </View>

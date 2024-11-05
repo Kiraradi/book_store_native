@@ -17,7 +17,7 @@ const RootStack: FC = () => {
       <Stack.Screen
         name="Book"
         component={BookScreen}
-        initialParams={{id: 0}}
+        options={{headerBackTitle: 'Back'}}
       />
     </Stack.Navigator>
   );

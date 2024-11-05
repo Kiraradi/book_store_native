@@ -5,10 +5,17 @@ import {FONT_FAMILY} from '../../../config/customFont';
 interface IPoppinsText {
   children: string;
   styles?: StyleProp<TextStyle>;
+  numberOfLines?: number;
 }
 
 const PoppinsText: FC<IPoppinsText> = props => {
-  return <Text style={[styles.text, props.styles]}>{props.children}</Text>;
+  return (
+    <Text
+      numberOfLines={props.numberOfLines}
+      style={[styles.text, props.styles]}>
+      {props.children}
+    </Text>
+  );
 };
 
 const styles = StyleSheet.create({
