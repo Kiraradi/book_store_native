@@ -25,6 +25,7 @@ export const logInUserThunk = createAsyncThunk(
   'user/logInUser',
   async (data: IAuthData, thunkAPI) => {
     const response = await UserApi.logInUser(data);
+
     if (!response || !response.payload) {
       return thunkAPI.rejectWithValue('error');
     }

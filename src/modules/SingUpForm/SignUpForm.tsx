@@ -13,6 +13,7 @@ import PoppinsText from '../../UI/CustomsTexts/PoppinsText';
 import {ISignUpData} from '../../interfaces';
 import {useAppDispatch} from '../../store/hooks/useAppDispatch';
 import {signUpUserThunk} from '../../store/user/thunks';
+import {showNotification} from '../../services/Notification';
 
 const SingUpForm: FC = () => {
   const [isPasswordSecure, setPasswordSecure] = useState(true);
@@ -22,30 +23,31 @@ const SingUpForm: FC = () => {
   const {
     watch,
     control,
-    formState: {errors},
+    formState: {errors, isValid},
+    handleSubmit,
   } = useForm<ISignUpData>({
     resolver: yupResolver(SingUpSchema),
     mode: 'onChange',
   });
 
-  const handleSignUpUser = async () => {
-    if (!watch('email') || !watch('password') || !watch('passwordReplay')) {
-      return;
-    }
-    if (errors.email || errors.password || errors.passwordReplay) {
-      return;
-    }
-
-    if (watch('password') !== watch('passwordReplay')) {
+  const handleSignUpUser = async (formData: ISignUpData) => {
+    if (formData.password !== formData.passwordReplay) {
+      showNotification('Passwords do not match', 'error');
       return;
     }
 
     const data = {
-      email: watch('email'),
-      password: watch('password'),
+      email: formData.email,
+      password: formData.password,
     };
 
-    dispatch(signUpUserThunk(data));
+    dispatch(signUpUserThunk(data))
+      .unwrap()
+      .catch(() => {
+        showNotification('Oops something went wrong', 'error');
+      });
+
+    showNotification('Success', 'success');
   };
 
   const changePasswordSecure = () => {
@@ -182,8 +184,9 @@ const SingUpForm: FC = () => {
       </View>
       <View style={styles.buttonBar}>
         <CustomButton
+          disabled={!isValid}
           text={'Sign Up'}
-          callBack={handleSignUpUser}
+          callBack={handleSubmit(handleSignUpUser)}
           styles={styles.button}
         />
         <PoppinsText styles={styles.text}>or</PoppinsText>

@@ -17,6 +17,7 @@ import PoppinsText from '../../UI/CustomsTexts/PoppinsText';
 import {IAuthData} from '../../interfaces';
 import {useAppDispatch} from '../../store/hooks/useAppDispatch';
 import {logInUserThunk} from '../../store/user/thunks';
+import {showNotification} from '../../services/Notification';
 
 const LogInForm: FC = () => {
   const [isPasswordSecure, setPasswordSecure] = useState(true);
@@ -25,24 +26,20 @@ const LogInForm: FC = () => {
   const {
     watch,
     control,
-    formState: {errors},
+    formState: {errors, isValid},
+    handleSubmit,
   } = useForm<IAuthData>({
     resolver: yupResolver(LogInSchema),
     mode: 'all',
   });
 
-  const handleLogIn = async () => {
-    if (!watch('email') || !watch('password')) {
-      return;
-    }
-    if (errors.email || errors.password) {
-      return;
-    }
-
-    const data = {
-      ...watch(),
-    };
-    dispatch(logInUserThunk(data));
+  const handleLogIn = async (data: IAuthData) => {
+    dispatch(logInUserThunk(data))
+      .unwrap()
+      .catch(() => {
+        showNotification('Wrong email or password', 'error');
+      });
+    showNotification('Success', 'success');
   };
 
   const changePasswordSecure = () => {
@@ -133,8 +130,9 @@ const LogInForm: FC = () => {
       </View>
       <View style={styles.buttonBar}>
         <CustomButton
+          disabled={!isValid}
           text={'Log In'}
-          callBack={handleLogIn}
+          callBack={handleSubmit(handleLogIn)}
           styles={styles.button}
         />
         <PoppinsText styles={styles.text}>or</PoppinsText>

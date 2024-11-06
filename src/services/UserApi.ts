@@ -28,13 +28,12 @@ const logInUser = async (data: IAuthData) => {
     ServerBreakpoints.logIn,
     data,
   );
-
   return response.data;
 };
 
 const getMe = async () => {
   const response = await configuredAxios.get<IResponse<IPayloadSignUpUser>>(
-    (`${SERVER_URL}${ServerBreakpoints.getMe}`),
+    `${SERVER_URL}${ServerBreakpoints.getMe}`,
   );
 
   return response.data.payload.user;

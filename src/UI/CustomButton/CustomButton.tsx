@@ -7,11 +7,15 @@ interface ICustomButton {
   text: string;
   callBack: () => void;
   styles?: object;
+  disabled?: boolean;
 }
 
 const CustomButton: FC<ICustomButton> = props => {
   return (
-    <Pressable style={[styles.button, props.styles]} onPress={props.callBack}>
+    <Pressable
+      style={[styles.button, props.styles, props.disabled && styles.disabled]}
+      onPress={props.callBack}
+      disabled={props.disabled}>
       <PoppinsText styles={styles.text}>{props.text}</PoppinsText>
     </Pressable>
   );
@@ -28,6 +32,9 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     color: colors.light,
+  },
+  disabled: {
+    backgroundColor: colors.darkGrey,
   },
 });
 
