@@ -10,6 +10,7 @@ import CustomButton from '../../../../UI/CustomButton/CustomButton';
 import {IEditUserData} from '../../../../interfaces';
 import {useAppDispatch} from '../../../../store/hooks/useAppDispatch';
 import {editUserThunk} from '../../../../store/user/thunks';
+import {showNotification} from '../../../../services/Notification';
 
 interface IPersonalInfoEditForm {
   close: () => void;
@@ -21,13 +22,14 @@ const PersonalInfoEditForm: FC<IPersonalInfoEditForm> = props => {
   const {
     watch,
     control,
-    formState: {errors},
+    formState: {errors, isValid},
+    handleSubmit,
   } = useForm<IEditUserData>({
     resolver: yupResolver(PersonalInfoEditFormSchema),
     mode: 'all',
   });
 
-  const checkEmai = (): boolean => {
+  const checkEmail = (): boolean => {
     const data = watch('email');
     if (!data) {
       return false;
@@ -39,19 +41,22 @@ const PersonalInfoEditForm: FC<IPersonalInfoEditForm> = props => {
 
     return true;
   };
-  const handleEditInfo = async () => {
-    if (errors.email || errors.fullName) {
-      return;
-    }
-    const fillName = watch('fullName');
+  const handleEditInfo = async (formData: IEditUserData) => {
+    const fillName = formData.fullName;
     const data: IEditUserData = {};
     if (fillName && fillName.length > 0) {
       data.fullName = fillName;
     }
-    if (watch('email') && watch('email') !== email) {
-      data.email = watch('email');
+    if (formData.email === email) {
+      showNotification('Enter new email', 'error');
+      return;
     }
-    dispatch(editUserThunk(data));
+    dispatch(editUserThunk(data))
+      .unwrap()
+      .catch(() => {
+        showNotification('Oops something went wrong', 'error');
+      });
+    showNotification('Data changed successfully', 'success');
     props.close();
   };
 
@@ -118,15 +123,16 @@ const PersonalInfoEditForm: FC<IPersonalInfoEditForm> = props => {
         <TextError
           fieldName="Email"
           text="Enter your new email"
-          isBeingFilledIn={checkEmai()}
+          isBeingFilledIn={checkEmail()}
           validationStatus={
-            checkEmai() ? (errors.email?.message ? 'error' : 'success') : null
+            checkEmail() ? (errors.email?.message ? 'error' : 'success') : null
           }
         />
       </View>
       <CustomButton
+        disabled={!isValid}
         text={'Confirm'}
-        callBack={handleEditInfo}
+        callBack={handleSubmit(handleEditInfo)}
         styles={styles.button}
       />
     </View>

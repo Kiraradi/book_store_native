@@ -9,6 +9,7 @@ import CustomButton from '../../../../UI/CustomButton/CustomButton';
 import CustomInput from '../../../../UI/Components/CustomInput/CustomInput';
 import TextError from '../../../../UI/TextError/TextError';
 import {editUserPasswordThunk} from '../../../../store/user/thunks';
+import {showNotification} from '../../../../services/Notification';
 
 interface IPasswordEdit {
   close: () => void;
@@ -23,25 +24,16 @@ const PasswordEdit: FC<IPasswordEdit> = props => {
   const {
     watch,
     control,
-    formState: {errors},
+    formState: {errors, isValid},
+    handleSubmit,
   } = useForm<IEditUserPassword>({
     resolver: yupResolver(PasswordEditSchema),
     mode: 'all',
   });
 
-  const handleEditPassword = () => {
-    if (
-      !watch('oldPassword') ||
-      !watch('newPassword') ||
-      !watch('passwordReplay')
-    ) {
-      return;
-    }
-    if (errors.oldPassword || errors.newPassword || errors.passwordReplay) {
-      return;
-    }
-
-    if (watch('newPassword') !== watch('passwordReplay')) {
+  const handleEditPassword = (formData: IEditUserPassword) => {
+    if (formData.newPassword !== formData.passwordReplay) {
+      showNotification('Passwords do not match', 'error');
       return;
     }
 
@@ -50,7 +42,12 @@ const PasswordEdit: FC<IPasswordEdit> = props => {
       newPassword: watch('newPassword'),
     };
 
-    dispatch(editUserPasswordThunk(data));
+    dispatch(editUserPasswordThunk(data))
+      .unwrap()
+      .catch(() => {
+        showNotification('Oops something went wrong', 'error');
+      });
+    showNotification('Password changed successfully', 'success');
     props.close();
   };
 
@@ -183,8 +180,9 @@ const PasswordEdit: FC<IPasswordEdit> = props => {
         />
       </View>
       <CustomButton
+        disabled={!isValid}
         text={'Confirm'}
-        callBack={handleEditPassword}
+        callBack={handleSubmit(handleEditPassword)}
         styles={styles.button}
       />
     </View>
