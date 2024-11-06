@@ -9,7 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 import {BookScreenProps} from '../../Navigation/Screens/types';
 import {useAppDispatch} from '../../store/hooks/useAppDispatch';
 import {addBookToCart} from '../../store/cart/cartSlice';
-import {Notifier, Easing} from 'react-native-notifier';
+import {showNotification} from '../../services/Notification';
 
 const BookLabel: FC<IBook> = props => {
   const navigator = useNavigation<BookScreenProps>();
@@ -20,16 +20,7 @@ const BookLabel: FC<IBook> = props => {
 
   const addToCart = async () => {
     dispatch(addBookToCart(props));
-    Notifier.showNotification({
-      title: 'John Doe',
-      description: 'Hello! Can you help me with notifications?',
-      duration: 0,
-      showAnimationDuration: 800,
-      showEasing: Easing.bounce,
-      onHidden: () => console.log('Hidden'),
-      onPress: () => console.log('Press'),
-      hideOnPress: false,
-    });
+    showNotification('Added to cart', 'success');
   };
   return (
     <View style={styles.wrapper}>
