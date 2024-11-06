@@ -17,6 +17,7 @@ import {useAppDispatch} from '../../../../store/hooks/useAppDispatch';
 import {addUser} from '../../../../store/user/UserSliсe';
 import {SERVER_URL} from '../../../../../config';
 import CustomTabButton from '../../../../UI/Components/CustomTabButton';
+import {showNotification} from '../../../../services/Notification';
 
 const UserAvatar: FC = () => {
   const user = useAppSelector(state => state.user.user);
@@ -50,9 +51,13 @@ const UserAvatar: FC = () => {
 
       const userWithAvatar = await UserApi.saveAtatar(data).catch(() => null);
 
-      if (userWithAvatar) {
-        dispatch(addUser(userWithAvatar));
+      if (!userWithAvatar) {
+        showNotification('Oops something went wrong', 'error');
+        return;
       }
+
+      dispatch(addUser(userWithAvatar));
+      showNotification('Avatar changed successfully', 'success');
     }
   };
 
